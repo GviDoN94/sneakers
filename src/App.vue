@@ -29,15 +29,34 @@
         </div>
       </div>
 
-      <CardList />
+      <div class="mt-10">
+        <CardList :items="items" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+  import { onMounted, ref } from 'vue';
+  import axios from 'axios';
+
   import Header from '@/components/Header.vue';
   import CardList from '@/components/CardList.vue';
-  import Drawer from '@/components/Drawer.vue';
+  // import Drawer from '@/components/Drawer.vue';
+
+  const items = ref([]);
+
+  const { VITE_BASE_API: baseApi } = import.meta.env;
+
+  onMounted(async () => {
+    try {
+      const { data } = await axios.get(`${baseApi}/items`);
+
+      items.value = data;
+    } catch (e) {
+      console.log(e);
+    }
+  });
 </script>
 
 <style scoped></style>
