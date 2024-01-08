@@ -8,10 +8,13 @@
         <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
 
         <div class="flex gap-4">
-          <select class="py-2 px-3 border rounded-md outline-none">
-            <option>По названию</option>
-            <option>По цене (дешевые)</option>
-            <option>По цене (дорогие)</option>
+          <select
+            @change="onChangeSelect"
+            class="py-2 px-3 border rounded-md outline-none"
+          >
+            <option value="name">По названию</option>
+            <option value="price">По цене (дешевые)</option>
+            <option value="-price">По цене (дорогие)</option>
           </select>
 
           <div class="relative">
@@ -21,6 +24,7 @@
               alt="Search"
             />
             <input
+              @change="onChangeSearchInput"
               type="text"
               placeholder="Поиск..."
               class="border rounded-md py-1.5 pl-11 pr-4 outline-none focus:border-gray-400"
@@ -37,26 +41,45 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, reactive, watch } from 'vue';
   import axios from 'axios';
 
   import Header from '@/components/Header.vue';
   import CardList from '@/components/CardList.vue';
   // import Drawer from '@/components/Drawer.vue';
 
+  const { VITE_BASE_API: baseApi } = import.meta.env;
   const items = ref([]);
 
-  const { VITE_BASE_API: baseApi } = import.meta.env;
+  const filters = reactive({
+    sortBy: 'title',
+    searchQuery: '',
+  });
 
-  onMounted(async () => {
+  const onChangeSelect = (event) => (filters.sortBy = event.target.value);
+  const onChangeSearchInput = (event) =>
+    (filters.searchQuery = event.target.value);
+
+  const fetchItems = async () => {
     try {
-      const { data } = await axios.get(`${baseApi}/items`);
+      const params = {
+        sortBy: filters.sortBy,
+      };
+
+      if (filters.searchQuery) {
+        params.title = `*${filters.searchQuery}*`;
+      }
+
+      const { data } = await axios.get(`${baseApi}/items`, { params });
 
       items.value = data;
     } catch (e) {
       console.log(e);
     }
-  });
+  };
+
+  onMounted(fetchItems);
+  watch(filters, fetchItems);
 </script>
 
 <style scoped></style>
