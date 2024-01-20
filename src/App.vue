@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-  import { onMounted, ref, reactive, watch } from 'vue';
+  import { onMounted, ref, reactive, watch, provide } from 'vue';
   import axios from 'axios';
 
   import Header from '@/components/Header.vue';
@@ -115,7 +115,10 @@
     await fetchItems();
     await fetchFavorites();
   });
+
   watch(filters, fetchItems);
+
+  provide('addToFavorite', addToFavorite);
 </script>
 
 <style scoped></style>
