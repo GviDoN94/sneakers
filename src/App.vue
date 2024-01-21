@@ -34,7 +34,10 @@
       </div>
 
       <div class="mt-10">
-        <CardList :items="items" />
+        <CardList
+          :items="items"
+          @addToFavorite="addToFavorite"
+        />
       </div>
     </div>
   </div>
@@ -77,7 +80,7 @@
         return {
           ...item,
           isFavorite: true,
-          favoriteId: favorites.id,
+          favoriteId: favorite.id,
         };
       });
     } catch (e) {
@@ -86,7 +89,26 @@
   };
 
   const addToFavorite = async (item) => {
-    item.isFavorite = true;
+    try {
+      if (!item.isFavorite) {
+        const obj = {
+          parentId: item.id,
+        };
+
+        item.isFavorite = true;
+
+        const { data } = await axios.post(`${baseApi}/favorites`, obj);
+
+        item.favoriteId = data.id;
+      } else {
+        console.log(item);
+        item.isFavorite = false;
+        await axios.delete(`${baseApi}/favorites/${item.favoriteId}`);
+        item.favoriteId = null;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const fetchItems = async () => {
@@ -104,6 +126,7 @@
       items.value = data.map((obj) => ({
         ...obj,
         isFavorite: false,
+        favoriteId: null,
         isAdded: false,
       }));
     } catch (e) {

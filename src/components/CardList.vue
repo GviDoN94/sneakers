@@ -7,7 +7,7 @@
       :title="item.title"
       :imageUrl="item.imageUrl"
       :price="item.price"
-      :onClickAdd="onClickAdd"
+      :onClickFavorite="() => emit('addToFavorite', item)"
       :isFavorite="item.isFavorite"
     />
   </div>
@@ -20,5 +20,5 @@
     items: Array,
   });
 
-  const onClickAdd = () => alert('Добавить!');
+  const emit = defineEmits(['addToFavorite']);
 </script>
