@@ -1,7 +1,7 @@
 <template>
-  <!-- <Drawer /> -->
+  <Drawer v-if="drawerOpen" />
   <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
-    <Header />
+    <Header @open-drawer="openDrawer" />
 
     <div class="p-10">
       <div class="flex justify-between items-center">
@@ -36,7 +36,7 @@
       <div class="mt-10">
         <CardList
           :items="items"
-          @addToFavorite="addToFavorite"
+          @add-to-favorite="addToFavorite"
         />
       </div>
     </div>
@@ -49,10 +49,14 @@
 
   import Header from '@/components/Header.vue';
   import CardList from '@/components/CardList.vue';
-  // import Drawer from '@/components/Drawer.vue';
+  import Drawer from '@/components/Drawer.vue';
 
   const { VITE_BASE_API: baseApi } = import.meta.env;
   const items = ref([]);
+  const drawerOpen = ref(false);
+
+  const openDrawer = () => (drawerOpen.value = true);
+  const closeDrawer = () => (drawerOpen.value = false);
 
   const filters = reactive({
     sortBy: 'title',
@@ -141,7 +145,7 @@
 
   watch(filters, fetchItems);
 
-  provide('addToFavorite', addToFavorite);
+  provide('cartActions', { openDrawer, closeDrawer });
 </script>
 
 <style scoped></style>
