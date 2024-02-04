@@ -1,13 +1,19 @@
 <template>
   <div class="flex flex-col flex-1 gap-4">
-    <CartItem imageUrl="/sneakers/sneakers-1.jpg" />
-    <CartItem imageUrl="/sneakers/sneakers-1.jpg" />
-    <CartItem imageUrl="/sneakers/sneakers-1.jpg" />
-    <CartItem imageUrl="/sneakers/sneakers-1.jpg" />
-    <CartItem imageUrl="/sneakers/sneakers-1.jpg" />
+    <CartItem
+      v-for="item in cart"
+      :key="item.id"
+      :id="item.id"
+      :title="item.title"
+      :imageUrl="item.imageUrl"
+      :price="item.price"
+    />
   </div>
 </template>
 
 <script setup>
+  import { inject } from 'vue';
   import CartItem from '@/components/CartItem.vue';
+
+  const { cart } = inject('cart');
 </script>

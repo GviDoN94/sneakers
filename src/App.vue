@@ -156,7 +156,7 @@
 
   watch(filters, fetchItems);
 
-  provide('cartActions', { openDrawer, closeDrawer });
+  provide('cart', { cart, openDrawer, closeDrawer });
 </script>
 
 <style scoped></style>
