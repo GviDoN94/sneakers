@@ -15,6 +15,7 @@
           class="opacity-30 hover:opacity-100 cursor-pointer transition"
           src="/close.svg"
           alt="Close"
+          @click="emit('onClickRemove')"
         />
       </div>
     </div>
@@ -22,6 +23,8 @@
 </template>
 
 <script setup>
+  const emit = defineEmits('onClickRemove');
+
   defineProps({
     id: Number,
     title: String,
