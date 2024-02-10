@@ -21,7 +21,7 @@
           src="/cart.svg"
           alt="Cart"
         />
-        <span>1205 руб.</span>
+        <span>{{ totalPrice }} руб.</span>
       </li>
       <li
         class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black"
@@ -46,5 +46,7 @@
 </template>
 
 <script setup>
+  defineProps({ totalPrice: Number });
+
   const emit = defineEmits(['openDrawer']);
 </script>

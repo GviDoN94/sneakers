@@ -23,12 +23,12 @@
 </template>
 
 <script setup>
-  const emit = defineEmits('onClickRemove');
-
   defineProps({
     id: Number,
     title: String,
     imageUrl: String,
     price: Number,
   });
+
+  const emit = defineEmits('onClickRemove');
 </script>

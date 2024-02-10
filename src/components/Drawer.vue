@@ -9,13 +9,13 @@
       <div class="flex gap-2">
         <span>Итого:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b>12900 руб.</b>
+        <b>{{ totalPrice }} руб.</b>
       </div>
 
       <div class="flex gap-2">
         <span>Налог 5%:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b>900 руб.</b>
+        <b>{{ vatPrice }} руб.</b>
       </div>
 
       <button
@@ -30,4 +30,9 @@
 <script setup>
   import DrawerHead from '@/components/DrawerHead.vue';
   import CartItemList from '@/components/CartItemList.vue';
+
+  defineProps({
+    totalPrice: Number,
+    vatPrice: Number,
+  });
 </script>
