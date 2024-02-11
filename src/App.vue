@@ -3,6 +3,8 @@
     v-if="drawerOpen"
     :totalPrice="totalPrice"
     :vatPrice="vatPrice"
+    :buttonDislabled="cartButtonDisabled"
+    @create-order="createOrder"
   />
   <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
     <Header
@@ -62,11 +64,20 @@
   const { VITE_BASE_API: baseApi } = import.meta.env;
   const items = ref([]);
   const cart = ref([]);
+  const isCreatingOrder = ref(false);
   const drawerOpen = ref(false);
+
   const totalPrice = computed(() =>
     cart.value.reduce((acc, item) => acc + item.price, 0),
   );
+
   const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100));
+
+  const cartIsEmpty = computed(() => cart.value.length === 0);
+
+  const cartButtonDisabled = computed(
+    () => isCreatingOrder.value || cartIsEmpty.value,
+  );
 
   const openDrawer = () => (drawerOpen.value = true);
   const closeDrawer = () => (drawerOpen.value = false);
@@ -84,6 +95,25 @@
   const removeFromCart = (item) => {
     cart.value.splice(cart.value.indexOf(item), 1);
     item.isAdded = false;
+  };
+
+  const createOrder = async () => {
+    try {
+      isCreatingOrder.value = true;
+
+      const { data } = await axios.post(`${baseApi}/orders`, {
+        items: cart.value,
+        totalPrice: totalPrice.value,
+      });
+
+      cart.value = [];
+
+      return data;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      isCreatingOrder.value = false;
+    }
   };
 
   const onClickAddPlus = (item) => {
@@ -174,6 +204,10 @@
   });
 
   watch(filters, fetchItems);
+
+  watch(cart, () => {
+    items.value = items.value.map((item) => ({ ...item, isAdded: false }));
+  });
 
   provide('cart', { cart, openDrawer, closeDrawer, addToCart, removeFromCart });
 </script>

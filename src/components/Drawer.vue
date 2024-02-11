@@ -19,7 +19,9 @@
       </div>
 
       <button
+        :disabled="buttonDislabled"
         class="mt-4 transition bg-lime-500 w-full rounded-xl py-3 text-white disabled:bg-slate-300 hover:bg-lime-600 active:bg-lime-700 cursor-pointer"
+        @click="emit('createOrder')"
       >
         Оформить заказ
       </button>
@@ -34,5 +36,8 @@
   defineProps({
     totalPrice: Number,
     vatPrice: Number,
+    buttonDislabled: Boolean,
   });
+
+  const emit = defineEmits(['createOrder']);
 </script>
