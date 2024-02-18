@@ -73,7 +73,7 @@
 
       items.value = items.value.map((item) => {
         const favorite = favorites.find(
-          (favorite) => favorite.parentId === item.id,
+          (favorite) => favorite.item_id === item.id,
         );
 
         if (!favorite) {
@@ -95,7 +95,7 @@
     try {
       if (!item.isFavorite) {
         const obj = {
-          parentId: item.id,
+          item_id: item.id,
         };
 
         item.isFavorite = true;
@@ -104,7 +104,6 @@
 
         item.favoriteId = data.id;
       } else {
-        console.log(item);
         item.isFavorite = false;
         await axios.delete(`${baseApi}/favorites/${item.favoriteId}`);
         item.favoriteId = null;
