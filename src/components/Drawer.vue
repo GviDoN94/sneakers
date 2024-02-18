@@ -7,13 +7,21 @@
     <DrawerHead />
 
     <div
-      v-if="!totalPrice"
+      v-if="!totalPrice || orderId"
       class="flex h-full items-center"
     >
       <InfoBlock
+        v-if="!totalPrice && !orderId"
         title="Корзина пустая"
         description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
         imageUrl="/package-icon.png"
+      />
+
+      <InfoBlock
+        v-if="orderId"
+        title="Заказ оформлен!"
+        :description="`Ваш заказ #${orderId} скоро будет передан курьерской службе`"
+        imageUrl="/order-success-icon.png"
       />
     </div>
 
@@ -37,9 +45,9 @@
         </div>
 
         <button
-          :disabled="buttonDislabled"
+          :disabled="buttonDisabled"
           class="mt-4 transition bg-lime-500 w-full rounded-xl py-3 text-white disabled:bg-slate-300 hover:bg-lime-600 active:bg-lime-700 cursor-pointer"
-          @click="emit('createOrder')"
+          @click="createOrder"
         >
           Оформить заказ
         </button>
@@ -49,16 +57,46 @@
 </template>
 
 <script setup>
+  import { ref, computed, inject } from 'vue';
+  import axios from 'axios';
+
   import DrawerHead from '@/components/DrawerHead.vue';
   import CartItemList from '@/components/CartItemList.vue';
   import InfoBlock from './infoBlock.vue';
 
-  defineProps({
+  const props = defineProps({
     totalPrice: Number,
     vatPrice: Number,
-    buttonDislabled: Boolean,
-    closeDrawer: Function,
   });
 
-  const emit = defineEmits(['createOrder']);
+  const { VITE_BASE_API: baseApi } = import.meta.env;
+
+  const { cart, closeDrawer } = inject('cart');
+  const isCreatingOrder = ref(false);
+  const orderId = ref(null);
+
+  const cartIsEmpty = computed(() => cart.value.length === 0);
+
+  const buttonDisabled = computed(
+    () => isCreatingOrder.value || cartIsEmpty.value,
+  );
+
+  const createOrder = async () => {
+    try {
+      isCreatingOrder.value = true;
+
+      const { data } = await axios.post(`${baseApi}/orders`, {
+        items: cart.value,
+        totalPrice: props.totalPrice.value,
+      });
+
+      cart.value = [];
+
+      orderId.value = data.id;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      isCreatingOrder.value = false;
+    }
+  };
 </script>

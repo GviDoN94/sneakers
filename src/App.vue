@@ -3,9 +3,6 @@
     v-if="drawerOpen"
     :totalPrice="totalPrice"
     :vatPrice="vatPrice"
-    :buttonDislabled="cartButtonDisabled"
-    :closeDrawer="closeDrawer"
-    @create-order="createOrder"
   />
   <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
     <Header
@@ -21,14 +18,11 @@
 
 <script setup>
   import { ref, watch, provide, computed, onMounted } from 'vue';
-  import axios from 'axios';
 
   import Header from '@/components/Header.vue';
   import Drawer from '@/components/Drawer.vue';
 
-  const { VITE_BASE_API: baseApi } = import.meta.env;
   const cart = ref([]);
-  const isCreatingOrder = ref(false);
   const drawerOpen = ref(false);
 
   const totalPrice = computed(() =>
@@ -36,12 +30,6 @@
   );
 
   const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100));
-
-  const cartIsEmpty = computed(() => cart.value.length === 0);
-
-  const cartButtonDisabled = computed(
-    () => isCreatingOrder.value || cartIsEmpty.value,
-  );
 
   const openDrawer = () => (drawerOpen.value = true);
   const closeDrawer = () => (drawerOpen.value = false);
@@ -61,25 +49,6 @@
       addToCart(item);
     } else {
       removeFromCart(item);
-    }
-  };
-
-  const createOrder = async () => {
-    try {
-      isCreatingOrder.value = true;
-
-      const { data } = await axios.post(`${baseApi}/orders`, {
-        items: cart.value,
-        totalPrice: totalPrice.value,
-      });
-
-      cart.value = [];
-
-      return data;
-    } catch (e) {
-      console.log(e);
-    } finally {
-      isCreatingOrder.value = false;
     }
   };
 
