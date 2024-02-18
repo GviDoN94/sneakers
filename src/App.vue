@@ -4,6 +4,7 @@
     :totalPrice="totalPrice"
     :vatPrice="vatPrice"
     :buttonDislabled="cartButtonDisabled"
+    :closeDrawer="closeDrawer"
     @create-order="createOrder"
   />
   <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">

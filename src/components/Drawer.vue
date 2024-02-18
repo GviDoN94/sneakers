@@ -1,5 +1,8 @@
 <template>
-  <div class="fixed top-0 left-0 w-full h-full bg-black/70 z-10"></div>
+  <div
+    @click="closeDrawer"
+    class="fixed top-0 left-0 w-full h-full bg-black/70 z-10"
+  ></div>
   <div class="flex flex-col bg-white w-96 h-full fixed right-0 top-0 z-20 p-8">
     <DrawerHead />
 
@@ -54,6 +57,7 @@
     totalPrice: Number,
     vatPrice: Number,
     buttonDislabled: Boolean,
+    closeDrawer: Function,
   });
 
   const emit = defineEmits(['createOrder']);
