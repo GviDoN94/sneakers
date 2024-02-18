@@ -45,7 +45,7 @@
 
   const { VITE_BASE_API: baseApi } = import.meta.env;
 
-  const { cart, addToCart, removeFromCart } = inject('cart');
+  const { cart, onClickAddPlus } = inject('cart');
 
   const items = ref([]);
 
@@ -55,14 +55,6 @@
   });
 
   const onChangeSelect = (event) => (filters.sortBy = event.target.value);
-
-  const onClickAddPlus = (item) => {
-    if (!item.isAdded) {
-      addToCart(item);
-    } else {
-      removeFromCart(item);
-    }
-  };
 
   const onChangeSearchInput = (event) =>
     (filters.searchQuery = event.target.value);
@@ -137,9 +129,6 @@
   };
 
   onMounted(async () => {
-    const localCart = localStorage.getItem('cart');
-    cart.value = localCart ? JSON.parse(localCart) : [];
-
     await fetchItems();
     await fetchFavorites();
 

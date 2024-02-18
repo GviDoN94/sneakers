@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-  import { ref, watch, provide, computed } from 'vue';
+  import { ref, watch, provide, computed, onMounted } from 'vue';
   import axios from 'axios';
 
   import Header from '@/components/Header.vue';
@@ -55,6 +55,14 @@
     item.isAdded = false;
   };
 
+  const onClickAddPlus = (item) => {
+    if (!item.isAdded) {
+      addToCart(item);
+    } else {
+      removeFromCart(item);
+    }
+  };
+
   const createOrder = async () => {
     try {
       isCreatingOrder.value = true;
@@ -74,6 +82,11 @@
     }
   };
 
+  onMounted(async () => {
+    const localCart = localStorage.getItem('cart');
+    cart.value = localCart ? JSON.parse(localCart) : [];
+  });
+
   watch(
     cart,
     () => {
@@ -82,7 +95,7 @@
     { deep: true },
   );
 
-  provide('cart', { cart, openDrawer, closeDrawer, addToCart, removeFromCart });
+  provide('cart', { cart, openDrawer, closeDrawer, onClickAddPlus });
 </script>
 
 <style scoped></style>
