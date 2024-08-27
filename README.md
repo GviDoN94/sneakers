@@ -1,11 +1,10 @@
 # Sneakers
 
- You can look at it [here](https://sneakers.gvidon94.ru/)
-
-
-![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg) ![Vite](https://img.shields.io/badge/Vite-5.x-blue.svg)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg?logo=vuedotjs) ![Vite](https://img.shields.io/badge/Vite-5.x-brightgreen.svg?logo=vite) ![Vite](https://img.shields.io/badge/Tailwind-blue.svg?logo=tailwindcss) ![Vite](https://img.shields.io/badge/Axios-blue.svg?logo=axios) ![Vite](https://img.shields.io/badge/Lodash-blue.svg?logo=lodash) ![Vite](https://img.shields.io/badge/prettier-blue.svg?logo=prettier) ![Vite](https://img.shields.io/badge/ESLint-blue.svg?logo=eslint)
 
 **Sneakers Store** is a web application for a sports footwear store. It allows users to browse products, add them to favorites and the shopping cart, and perform searches and sorting before making a purchase.
+
+**You can view it [here](https://sneakers.gvidon94.ru/)**
 
 ## Features
 
@@ -29,8 +28,8 @@
 
 ### Prerequisites
 
-- Node.js >= 12.x
-- npm >= 6.x or yarn >= 1.22.x
+- Node.js >= 18.x
+- npm >= 10.x or yarn >= 1.22.x
 
 ### Install Dependencies
 
@@ -39,6 +38,7 @@ npm install
 # or
 yarn install
 ```
+
 ### Start the Development Server
 
 ```bash
