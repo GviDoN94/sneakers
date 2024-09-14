@@ -1,6 +1,6 @@
 # Sneakers
 
-![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg?logo=vuedotjs) ![Vite](https://img.shields.io/badge/Vite-5.x-brightgreen.svg?logo=vite) ![Vite](https://img.shields.io/badge/Tailwind-blue.svg?logo=tailwindcss) ![Vite](https://img.shields.io/badge/Axios-blue.svg?logo=axios) ![Vite](https://img.shields.io/badge/Lodash-blue.svg?logo=lodash) ![Vite](https://img.shields.io/badge/prettier-blue.svg?logo=prettier) ![Vite](https://img.shields.io/badge/ESLint-blue.svg?logo=eslint)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg?logo=vuedotjs) ![Vite](https://img.shields.io/badge/Vite-5.x-brightgreen.svg?logo=vite) ![Vite](https://img.shields.io/badge/Tailwind-blue.svg?logo=tailwindcss) ![Vite](https://img.shields.io/badge/Axios-blue.svg?logo=axios) ![Vite](https://img.shields.io/badge/Lodash-blue.svg?logo=lodash) ![Vite](https://img.shields.io/badge/Prettier-blue.svg?logo=prettier) ![Vite](https://img.shields.io/badge/ESLint-blue.svg?logo=eslint)
 
 **Sneakers Store** is a web application for a sports footwear store. It allows users to browse products, add them to favorites and the shopping cart, and perform searches and sorting before making a purchase.
 
